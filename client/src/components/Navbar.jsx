@@ -6,7 +6,8 @@ import {
   Volume2,
   VolumeX,
   LogOut,
-  SlidersHorizontal
+  SlidersHorizontal,
+  User
 } from 'lucide-react';
 
 export default function Navbar({
@@ -23,7 +24,7 @@ export default function Navbar({
     <header className="navbar">
       <div className="brand" onClick={() => setPage('practice')} data-testid="brand-mark">
         <div className="logo-mark">
-          <BrainCircuit size={22} />
+          <BrainCircuit size={20} />
         </div>
         <div>
           <div className="brand-name">
@@ -39,7 +40,7 @@ export default function Navbar({
           onClick={() => setPage('academy')}
           data-testid="academy-nav"
         >
-          <BookOpen size={15} /> Academy
+          <BookOpen size={14} /> <span>Academy</span>
         </button>
 
         <button
@@ -47,17 +48,16 @@ export default function Navbar({
           onClick={() => setPage('practice')}
           data-testid="practice-nav"
         >
-          <CodeXml size={15} /> Practice
+          <CodeXml size={14} /> <span>Practice</span>
         </button>
 
         <button
-          className="nav-item settings-nav"
+          className="icon-button"
           onClick={() => setSound(!sound)}
           data-testid="sound-toggle-nav"
           title={sound ? 'Mute typing sound' : 'Enable typing sound'}
         >
           {sound ? <Volume2 size={15} /> : <VolumeX size={15} />}
-          <span>Sound {sound ? 'On' : 'Off'}</span>
         </button>
 
         <button
@@ -66,12 +66,18 @@ export default function Navbar({
           data-testid="settings-nav-button"
           title="App Settings"
         >
-          <SlidersHorizontal size={15} />
+          <SlidersHorizontal size={14} />
         </button>
 
-        <div className="guest-chip" data-testid="user-chip">
+        <div
+          className="guest-chip"
+          data-testid="user-chip"
+          onClick={() => !user && setShowAuth(true)}
+          style={{ cursor: user ? 'default' : 'pointer' }}
+          title={user ? `Signed in as ${user.display_name}` : 'Click to Sign In or Quick Access'}
+        >
           <span className="status-dot"></span>
-          {user?.display_name || user?.email?.split('@')[0] || 'Guest'}
+          <span>{user?.display_name || user?.email?.split('@')[0] || 'Guest'}</span>
         </div>
 
         {user ? (
@@ -84,7 +90,7 @@ export default function Navbar({
             data-testid="logout-button"
             title="Sign out"
           >
-            <LogOut size={16} />
+            <LogOut size={15} />
           </button>
         ) : (
           <button
